@@ -28,8 +28,23 @@
 \usepackage{newtxtext}       % 
 \usepackage{newtxmath}       % selects Times Roman as basic font
 
+\usepackage{float}
+\usepackage{wrapfig}
+
 % see the list of further useful packages
 % in the Reference Guide
+
+% Custom Functions:
+%
+% For Chapter Authors underneath the chapter header
+\makeatletter
+\newcommand{\chapterauthor}[1]{%
+  {\parindent0pt\vspace*{-25pt}%
+  \linespread{1.1}\large\scshape#1%
+  \par\nobreak\vspace*{35pt}}
+  \@afterheading%
+}
+\makeatother
 
 \makeindex             % used for the subject index
                        % please use the style svind.ist with
@@ -58,16 +73,16 @@
 
 \mainmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\include{chapters/chapter1_dominic/chapter}
-\include{chapters/chapter2_lucas_w/chapter}
-\include{chapters/chapter3_melanie/chapter}
-\include{chapters/chapter4_niklas/chapter}
-\include{chapters/chapter5_lukas_o/chapter}
+% \include{chapters/chapter1_dominic/chapter}
+% \include{chapters/chapter2_lucas_w/chapter}
+% \include{chapters/chapter3_melanie/chapter}
+% \include{chapters/chapter4_niklas/chapter}
+% \include{chapters/chapter5_lukas_o/chapter}
 \include{chapters/chapter6_bruno/chapter}
-\include{chapters/chapter7_katrin/chapter}
-\include{chapters/chapter8_michael/chapter}
-\include{chapters/chapter9_philipp/chapter}
-\include{chapters/chapter10_benedikt/chapter}
+% \include{chapters/chapter7_katrin/chapter}
+% \include{chapters/chapter8_michael/chapter}
+% \include{chapters/chapter9_philipp/chapter}
+% \include{chapters/chapter10_benedikt/chapter}
 
 \backmatter%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printindex
