@@ -232,7 +232,7 @@ Important for the MQTT communication is to import the mqtt client, see figure \r
 \label{Communication}
 \end{figure}
 
-In line 29 in figure \ref{Communication} the QoS level is set to '2' like required with NFR 3.1. It is the highest level of service in MQTT. This level guarantees that each message is received only once by the intended recipients. QoS 2 is the safest and slowest quality of service level. The guarantee is provided by at least two request/response flows (a four-part handshake) between the sender and the receiver.
+In line 30 in figure \ref{Communication} the QoS level is set to '2' like required with NFR 3.1. It is the highest level of service in MQTT. This level guarantees that each message is received only once by the intended recipients. QoS 2 is the safest and slowest quality of service level. The guarantee is provided by at least two request/response flows (a four-part handshake) between the sender and the receiver.
 
 \subsubsection{Doctor and Calendar times}
 In the class Doctor it's only necessary to create the constructor with the needed attributes like described in the class diagram in figure \ref{Class_diagram}. Important is that here are two methods. One method for returning the title, name and specialist field from the doctor as info string and the other method for representation or displaying it. 
