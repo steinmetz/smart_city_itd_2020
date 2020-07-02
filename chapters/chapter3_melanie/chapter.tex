@@ -5,32 +5,33 @@
 %\usepackage[strings]{underscore}
 %\usepackage{pdfpages}
 %\usepackage{url}
-\textsl{written by \\ Melanie Löbel, Matriculation number 2170582} \\ 
+\textsl{written by \\ Melanie Löbel, \\ Matriculation number 2170582
+} \\ \\
 
 
 \abstract
 \\This chapter describes how hospitals are integrated into the "Smart City" project.
 In case of an accident it is important to know which hospital is the nearest one and if it has the appropriate specialists. Also it’s important to know if the hospital or the doctor is available.
 The main problem is to get those information as soon as possible because it can be essential for survival. For this purpose, each hospital must have its own ID and save the respective data such as location, existing specialists and their availability and transmitted these ones to the server. As soon as the respective hospital is contacted by the server via the corresponding topic, these information can be retrieved.
-The implementation was carried out via MQTT (Message Queuing Telemetry Transport). JSON (JavaScript Object Notation) was used for simple and language independent data exchange. Python is used as programming language.
+The implementation was carried out via MQTT (Message Queuing Telemetry Transport). JSON (JavaScript Object Notation) was used for simple and language independent data exchange \cite{sporny2019json}. Python is used as programming language.
 
 %}
 
 \section{Introduction}
 \label{sec:1}
-
+There are a lot of working definitions for a smart city. Washburn et al. \cite{nam2011conceptualizing} defines a smart city in this way: "The use of Smart Computing technologies to make the critical infrastructure components and services of a city - which include city administration, education, healthcare, public safety, real estate, transportation and utilities - more intelligent, interconnected and efficient." In this chapter is described the healthcare in form of making a hospital search more efficient.
 
 \section{Product overview (Context)}
 \label{Hospital_Product overview}
 
 %The research group BLABLA \cite{cheng2015building} did a similar work....using MQTT as it is shown in figure \ref{fig:1}.
 
-By using MQTT it has to be guarantee that the hospital is registered to the server, also called the MQTT Broker. Each hospital has its own stored data like location, doctors, availability and so on. The hospital must listen to the server and send the information when the responding topic is called. This happens when a client e.g. a patient is searching for a hospital or specialist. The topic that each hospital has to subscribe is '/hshl/hospitals/hospital_id'. Within this channel the data and messages should be transferred. For sending the relevant data to the server the hospital has to publish the topic '/hshl/hospitals/' too. This procedure results a context of following parts, the MQTT broker as central unit and the recipient represent as a patient and the sender consisting of three hospitals, see figure \ref{Overview environment}. 
+By using MQTT it has to be guarantee that the hospital is registered to the server, also called the MQTT Broker \cite{zabasta2018mqtt}. Each hospital has its own stored data like location, doctors, availability and so on. The hospital must listen to the server and send the information when the responding topic is called. This happens when a client e.g. a patient is searching for a hospital or specialist. The topic that each hospital has to subscribe is '/hshl/hospitals/hospital_id'. Within this channel the data and messages should be transferred. For sending the relevant data to the server the hospital has to publish the topic '/hshl/hospitals/' too. This procedure results a context of following parts, the MQTT broker as central unit and the recipient represent as a patient and the sender consisting of three hospitals, see figure \ref{Overview environment}. 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.375]{images/melanie_images/Bild1-5.png}
+\includegraphics[scale=.375]{images/Bild1-5.png}
 \caption{Overview environment and 'topic' for communication}
 \label{Overview environment}
 \end{figure}
@@ -194,7 +195,7 @@ Depending on the availability of the appointment, the hospital should accept or 
 \begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.425]{images/melanie_images/UseCase_Hospital-Search_variant-2.jpg}
+\includegraphics[scale=.425]{images/UseCase_Hospital-Search_variant-2.jpg}
 \caption{Use Case Diagram}
 \label{Use_Case}
 \end{figure}
@@ -213,10 +214,10 @@ A hospital has a name, an ID, a GPS location via coordinates and a number of fre
 For the required communication to the server there should be a separate class 'Communication' implemented which contains the topic with all necessary methods for MQTT communication. So the class 'Communication' should ensure that the hospital communicates via publish and subscribe the respective topic. 
 In following figure \ref{Class_diagram} the different classes with their needed attributes and methods are simply described.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.425]{images/melanie_images/Class_model.png}
+\includegraphics[scale=.425]{images/Class_model.png}
 \caption{Class Diagram}
 \label{Class_diagram}
 \end{figure}
@@ -226,23 +227,23 @@ In following figure \ref{Class_diagram} the different classes with their needed 
 \subsubsection{Communication}
 Important for the MQTT communication is to import the mqtt client, see figure \ref{Communication} line 1. For using the JSON data exchange (NFR 3.2) json has to be imported too. For the procedure to make an appointment with the doctor the package time has to be imported. Next to the topic '/hshl/hospitals/' the connect and message event must be also assigned. In addition the user name, the password and the broker address is needed to connect with it (FR 6). For listening to the server the method 'on_connect' is needed (FR 7). For sending a message the methods 'send_message' and 'on_message' must be included (FR 8). The hospital is only response when it is directly selected about the topic and its self.id. The relevant data will be send as a message in JSON format about the general topic '/hshl/hospitals/', see line 23 in figure \ref{Communication}.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.53]{images/melanie_images/Communication.png}
+\includegraphics[scale=.53]{images/Communication.png}
 \caption{Class Communication}
 \label{Communication}
 \end{figure}
 
-In line 30 in figure \ref{Communication} the QoS level is set to '2' like required with NFR 3.1. It is the highest level of service in MQTT. This level guarantees that each message is received only once by the intended recipients. QoS 2 is the safest and slowest quality of service level. The guarantee is provided by at least two request/response flows (a four-part handshake) between the sender and the receiver.
+In line 29 in figure \ref{Communication} the QoS level is set to '2' like required with NFR 3.1. It is the highest level of service in MQTT. This level guarantees that each message is received only once by the intended recipients. QoS 2 is the safest and slowest quality of service level. The guarantee is provided by at least two request/response flows (a four-part handshake) between the sender and the receiver \cite{ferguson1998quality}.
 
 \subsubsection{Doctor and Calendar times}
 In the class Doctor it's only necessary to create the constructor with the needed attributes like described in the class diagram in figure \ref{Class_diagram}. Important is that here are two methods. One method for returning the title, name and specialist field from the doctor as info string and the other method for representation or displaying it. 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.65]{images/melanie_images/Doctor.png}
+\includegraphics[scale=.65]{images/Doctor.png}
 \caption{Class Doctor}
 \label{Doctor}
 \end{figure}
@@ -252,7 +253,7 @@ The next important class which affects the appointment making is 'Calendar times
 %\begin{figure}[H]
 %\centering
 %\sidecaption
-%\includegraphics[scale=.65]{images/melanie_images/Calendar_times.png}
+%\includegraphics[scale=.65]{images/Calendar_times.png}
 %\caption{Available calendar times}
 %\label{Calendar_times}
 %\end{figure}
@@ -260,14 +261,14 @@ The next important class which affects the appointment making is 'Calendar times
 \begin{figure}[t]
 \begin{minipage}[t]{0.475\textwidth}
 \centering
-\includegraphics[scale=.65]{images/melanie_images/Calendar_times-1.png}
+\includegraphics[scale=.65]{images/Calendar_times-1.png}
     \caption{Available calendar times}
     \label{Calendar_times}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.475\textwidth}
 \centering
-\includegraphics[scale=.65]{images/melanie_images/Calendar_times-2.png}
+\includegraphics[scale=.65]{images/Calendar_times-2.png}
     %\caption{2}
     \label{2}
 \end{minipage}
@@ -276,10 +277,10 @@ The next important class which affects the appointment making is 'Calendar times
 \subsubsection{Hospital}
 The main important class is the hospital. The other classes like Communication, Doctor and Calendar times has to be imported into the class Hospital. In addition for make an appointment also the packages datetime and calendar are needed to be imported. In figure \ref{hospital_attributes} is represented which is required in FR1, FR2, FR3.1, FR3.2, FR4.5.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.65]{images/melanie_images/Relevant_attributes_in_the_hopital_class.png}
+\includegraphics[scale=.65]{images/Relevant_attributes_in_the_hopital_class.png}
 \caption{Needed attributes in the class Hospital}
 \label{hospital_attributes}
 \end{figure}
@@ -287,10 +288,10 @@ The main important class is the hospital. The other classes like Communication, 
 
 In the project 'Smart City' the main requirement is that the attributes which are shown in figure \ref{Relevant_attributes_server} in the dictionary 'hospital_info' will be send to the server. Including name and location coordinates of a hospital, the total number of doctors, the hospital ID, the total number of free rooms and the specialist fields. So the first step is to get these data and stored it into 'hospital info' as a dictionary. Also it is relevant return this hospital info so that another method have access to this info, see line 184 in figure \ref{Relevant_attributes_server}. 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.65]{images/melanie_images/get_hospital_info.png}
+\includegraphics[scale=.65]{images/get_hospital_info.png}
 \caption{Relevant attributes for the server}
 \label{Relevant_attributes_server}
 \end{figure}
@@ -298,20 +299,20 @@ In the project 'Smart City' the main requirement is that the attributes which ar
 With the variable 'message' the hospital info will be saved about the access on method self.get_hospital_info(). Afterwards this message will be send to the server with the access to the class Communication, see line 172 in figure \ref{send_hosp_info}. 
 
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.7]{images/melanie_images/send_hospital_info.png}
+\includegraphics[scale=.7]{images/send_hospital_info.png}
 \caption{Data transfer method for sending to the server}
 \label{send_hosp_info}
 \end{figure}
 
 Like in introduction in subsection \ref{tab_refs} described it should be also feasible to make an appointment with a doctor itself, see requirement FR4. The activity diagram in figure \ref{Make_Appointment} shows how this requirement with its sub requirements are implemented. It's represented the single steps until the appointment is accepted. So after a date is entered it will be check if it is a weekend or if this date is in the past. For these both situation a new date has to be entered. It's realized with an if and elif condition. If both situation are not true the else condition continues and a request for a time will be send. The next step is to check if the entered time is available for this date with the respective doctor. For that all appointments has to be summarized in a dictionary.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.55]{images/melanie_images/MakeAppointment.jpg}
+\includegraphics[scale=.55]{images/MakeAppointment.jpg}
 \caption{Activity Diagram "make an appointment"}
 \label{Make_Appointment}
 \end{figure}
@@ -321,7 +322,7 @@ For being sure that a room is available when it's needed there will be a room re
 %\begin{figure}[H]
 %\centering
 %\sidecaption
-%\includegraphics[scale=.65]{images/melanie_images/Acception.png}
+%\includegraphics[scale=.65]{images/Acception.png}
 %\caption{Acceptation message of an appointment with room reservation }
 %\label{Acception}
 %\end{figure}
@@ -329,10 +330,10 @@ For being sure that a room is available when it's needed there will be a room re
 \subsubsection{Usability}
 To have something like an overview about the main functions the non functional requirement NFR 1.1 was to have a menu item with the possibility to choose options like 'make an appointment' or 'show free rooms'. The possible options or functions which were implemented are described in figure \ref{Options}. It shows a cut out of the class Hospital.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \sidecaption
-\includegraphics[scale=.65]{images/melanie_images/Options.png}
+\includegraphics[scale=.65]{images/Options.png}
 \caption{Implementation menu item}
 \label{Options}
 \end{figure}
@@ -354,4 +355,4 @@ This capture showed in detail how a hospital could be implemented in the project
 
 \newpage
 \bibliographystyle{IEEEtran}
-\bibliography{./chapter.bib}
+\bibliography{chapter3_melanie.bib}
