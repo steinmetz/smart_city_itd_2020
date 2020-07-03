@@ -13,7 +13,7 @@
 \\This chapter describes how hospitals are integrated into the "Smart City" project.
 In case of an accident it is important to know which hospital is the nearest one and if it has the appropriate specialists. Also it’s important to know if the hospital or the doctor is available.
 The main problem is to get those information as soon as possible because it can be essential for survival. For this purpose, each hospital must have its own ID and save the respective data such as location, existing specialists and their availability and transmitted these ones to the server. As soon as the respective hospital is contacted by the server via the corresponding topic, these information can be retrieved.
-The implementation was carried out via MQTT (Message Queuing Telemetry Transport). JSON (JavaScript Object Notation) was used for simple and language independent data exchange \cite{sporny2019json}. Python is used as programming language.
+The implementation was carried out via MQTT (Message Queuing Telemetry Transport). JSON (JavaScript Object Notation) was used for simple and language independent data exchange. Python is used as programming language.
 
 %}
 
@@ -286,7 +286,7 @@ The main important class is the hospital. The other classes like Communication, 
 \end{figure}
 
 
-In the project 'Smart City' the main requirement is that the attributes which are shown in figure \ref{Relevant_attributes_server} in the dictionary 'hospital_info' will be send to the server. Including name and location coordinates of a hospital, the total number of doctors, the hospital ID, the total number of free rooms and the specialist fields. So the first step is to get these data and stored it into 'hospital info' as a dictionary. Also it is relevant return this hospital info so that another method have access to this info, see line 184 in figure \ref{Relevant_attributes_server}. 
+In the project 'Smart City' the main requirement is that the attributes which are shown in figure \ref{Relevant_attributes_server} in the dictionary 'hospital_info' will be send to the server. Including name and location coordinates of a hospital, the total number of doctors, the hospital ID, the total number of free rooms and the specialist fields. So the first step is to get these data and stored it into 'hospital info' as a dictionary. This structure is necessary for sending data in JSON format \cite{sporny2019json}. Also it is relevant return this hospital info so that another method have access to this info, see line 184 in figure \ref{Relevant_attributes_server}. 
 
 \begin{figure}[H]
 \centering
