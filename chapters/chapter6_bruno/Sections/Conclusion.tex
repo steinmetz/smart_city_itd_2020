@@ -1,0 +1,50 @@
+
+\section{Conclusion}
+
+\subsection{Results}\label{6sec:Results}
+%   show what is working
+% \\ which requirements are not implemented?
+% \\ what could you have done in a different way?
+
+The implementation works as it should.
+The user can add add or remove as many NPCs or manual drivers as they want.
+All requirements are fulfilled in the final version,
+with the caveat mentioned above in Section \ref{6sec:manCar}.
+When a manual driver crashes into something, 
+the messages are successfully send to the MQTT server.
+The filter also works well, 
+though it could be argued that the strict four 
+second threshold is too simplistic.
+
+\noindent 
+There is at the time of writing a problem with the communication with the server,
+where the accident reports are not correctly registered.
+But this seems to be a relatively simple matter 
+of getting the right formatting,
+either on the server or the client end.
+But overall, the goal of creating a smart city 
+that monitors the car safety of its citizens has been achieved.
+
+\subsection{Future work}\label{6sec:future Work}
+
+Currently a lot of information is send to the server that is completely ignored.
+Values like the heart rate, the intensity of the crash
+or the object that the car crashed into.
+Further functionality could be added to the server and
+the ambulance projects, to take these into account.
+This could help make better decisions in cases 
+where there is a high demand for emergency responses,
+but not enough capacity a the facilities.
+
+To the crash detection program, a feature to detect if the crash partner is also 
+a manual car could be added.
+This could make it so that only one emergency message is send to the hospital,
+not two for the same crash.
+\\
+\newline
+The biggest improvement to the system  would be to and the crash monitoring to NPCs.
+This could make this project a true simulation of a smart city,
+when the system doesn't require a user to crash Manual Cars into walls.
+To push the total simulation thought even further,
+the hospitals could also be implemented in CARLA,
+so the ambulances actually respond to the message and drive to the location.
